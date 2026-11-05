@@ -39,7 +39,6 @@ body {
     max-width: 1200px;
     margin: 0 auto 50px auto;
     padding: 0 15px;
-    height: 75vh;
     
 }
 
@@ -128,7 +127,7 @@ body {
     gap: 20px;
     padding: 15px 40px;
     margin-top: 40px;
-    height: 100%;
+
 }
 
 .footer-container p {
@@ -138,19 +137,35 @@ body {
     opacity: 0.9;
 }
 
-/* Responsividad para pantallas medianas y pequeñas */
-@media (max-width: 992px) {
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    body {
+        overflow: scroll;
+    }
+    .header-container {
+        flex-direction: column;
+        margin: 15px auto 20px auto;
+    }
+
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
 
-@media (max-width: 576px) {
+    .select-control {
+        max-width: 100%;
+    }
+
     .products-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .footer-container {
         grid-template-columns: 1fr;
+        padding: 20px 20px;
+        text-align: center;
+        margin: 20px;
     }
 }
+

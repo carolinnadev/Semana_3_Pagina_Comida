@@ -1,20 +1,18 @@
-// Capturamos el select de color
+// Lógica para el selector de Tema (Color)
 const selectColor = document.querySelector("#color");
 
-// Escuchamos cuando el usuario cambie la opción seleccionada
-selectColor.addEventListener("change", (e) => {
-    const modo = e.target.value;
-
+function cambiar_color(modo) {
     if (modo === "oscuro") {
         // Activamos el modo oscuro
         document.body.style.backgroundColor = "#121212";
         document.body.style.color = "#f1f1f1";
         
-        //Cambiar el fondo de las tarjetas y textos para que combinen
+        // Cambiar el fondo de las tarjetas y textos para que combinen
         document.querySelectorAll(".card-product").forEach(card => {
             card.style.backgroundColor = "#1e1e1e";
             card.style.color = "#f1f1f1";
-            card.querySelector("h2").style.color = "#ffffff";
+            const h2 = card.querySelector("h2");
+            if (h2) h2.style.color = "#ffffff";
             card.querySelectorAll("p").forEach(p => p.style.color = "#b0b0b0");
         });
 
@@ -27,11 +25,35 @@ selectColor.addEventListener("change", (e) => {
         document.querySelectorAll(".card-product").forEach(card => {
             card.style.backgroundColor = "#ffffff";
             card.style.color = "#333333";
-            card.querySelector("h2").style.color = "#222222";
+            const h2 = card.querySelector("h2");
+            if (h2) h2.style.color = "#222222";
             card.querySelectorAll("p").forEach(p => p.style.color = "#666666");
         });
     }
+
+    // Guardamos en LocalStorage
+    localStorage.setItem("themeMode", modo);
+}
+
+// Evento cuando el usuario cambia manualmente el tema
+if (selectColor) {
+    selectColor.addEventListener("change", (e) => {
+        const modo = e.target.value;
+        cambiar_color(modo);
+    });
+}
+
+// Cargar preferencia de tema al iniciar
+window.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("themeMode");
+    if (savedTheme && selectColor) {
+        selectColor.value = savedTheme; // Sincroniza el select visualmente
+        cambiar_color(savedTheme);
+    }
 });
+
+
+
 
 // ==============================
 // Traduccion de idioma 
@@ -151,12 +173,12 @@ const traducciones = {
     }
 };
 
+
+
 // Lógica para el selector de Idioma
 const selectIdioma = document.querySelector("#idioma");
 
-selectIdioma.addEventListener("change", (e) => {
-    const lang = e.target.value;
-
+function cambio_idioma(lang) {
     if (traducciones[lang]) {
         const t = traducciones[lang];
 
@@ -186,6 +208,24 @@ selectIdioma.addEventListener("change", (e) => {
                 p.textContent = t.footerTexts[index];
             }
         });
+
+        localStorage.setItem("selectedLanguage", lang); // Guardamos en LocalStorage
+    }
+}
+
+// Evento cuando el usuario cambia manualmente el idioma
+if (selectIdioma) {
+    selectIdioma.addEventListener("change", (e) => {
+        const lang = e.target.value;
+        cambio_idioma(lang);
+    });
+}
+
+// Cargar preferencia de idioma al iniciar
+window.addEventListener("DOMContentLoaded", () => {
+    const savedLang = localStorage.getItem("selectedLanguage");
+    if (savedLang && selectIdioma) {
+        selectIdioma.value = savedLang; // Sincroniza el select visualmente
+        cambio_idioma(savedLang);
     }
 });
-
